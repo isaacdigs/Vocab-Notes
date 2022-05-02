@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vocabulary Notes</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://bootswatch.com/4/sketchy/bootstrap.min.css">
+  </head>
+  <body>
+	<div class = "container mt-4">
+		<h1 class = "display-4 text-center">
+			<i class="fa-solid fa-book-bookmark text-info"></i>
+			Vocab <span class = "text-info"> Notes </span>
+		</h1>
+		<h2 class="lead mt-5">Word of the day</h2>
+		<h3 id="daily-word" class="text-info ml-3"> word </h3>
+		<p id="daily-meaning" class="text-secondary ml-5"> the meaning of the word on a given day. </p>
+		<hr>
+		<form id="vocab-form" class="mt-4">
+			<div class = "form-group">
+				<label for = "word">Word</label>
+				<input type = "text" id = "word" class = "form-control" required>
+			</div>
+			<div class = "form-group">
+				<label for = "meaning">Meaning</label>
+				<input type = "text" id = "meaning" class = "form-control" required>
+			</div>
+			<div class = "form-group">
+				<label for = "difficulty">Difficulty (1 - 10)</label>
+				<input type = "number" id = "difficulty" class = "form-control" min = "0" max = "10" required>
+			</div>
+			<input type = "submit" value = "Add Vocab" class = "btn btn-info btn-block mt-3">
+		</form>
+		<table class = "table table-striped mt-5">
+			<thead>
+				<th>Word</th>
+				<th>Meaning</th>
+				<th>Difficulty</th>
+			</thead>
+			<tbody id = "word-list">
+			</tbody>
+		</table>
+	</div>
+	
+
+	
+	<script src="app.js"></script>
+  </body>
+</html>
