@@ -37,6 +37,13 @@ class UI {
 		`;
 		list.appendChild(row);
 	}
+	
+	//method that deletes word from list
+	static deleteWordFromList(el) {
+		if(el.classList.contains('delete')) {
+			el.parentElement.parentElement.remove();
+		}
+	}
 }
 
 
@@ -62,6 +69,8 @@ document.querySelector('#vocab-form').addEventListener('submit', e => {
 })
 
 //Event : remove a vocab
-
+document.querySelector('#word-list').addEventListener('click', e => {
+	UI.deleteWordFromList(e.target);
+});
 
 
