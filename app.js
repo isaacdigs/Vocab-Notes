@@ -33,7 +33,7 @@ class UI {
 			<td>${wordObj.word}</td>
 			<td>${wordObj.meaning}</td>
 			<td>${wordObj.difficulty}</td>
-			<td><a href=# class="btn btn-sm btn-danger delete">X</a></td>
+			<td><a class="btn btn-sm btn-danger delete">X</a></td>
 		`;
 		list.appendChild(row);
 	}
@@ -43,6 +43,32 @@ class UI {
 		if(el.classList.contains('delete')) {
 			el.parentElement.parentElement.remove();
 		}
+	}
+	
+	//method that shows alert
+	static showAlert(message, className) {
+		//create alert box
+		const alertBox = document.createElement('div');
+		
+		//give the alert box basic bootstrap design
+		alertBox.className = `alert alert-${className}`;
+		alertBox.appendChild(document.createTextNode(message));
+		
+		//Insert alert box at top of the page
+		const container = document.querySelector('.container');
+		const wordOfTheDay = document.querySelector('.lead');
+		container.insertBefore(alertBox, wordOfTheDay);
+		
+		//Make the alert box vanish in 2 seconds
+		setTimeout(() => document.querySelector('.alert').remove(),2000);
+		
+	}
+	
+	//method that clear fields
+	static clearFields() {
+		document.querySelector('#word').value = '';
+		document.querySelector('#meaning').value = '';
+		document.querySelector('#difficulty').value = '';
 	}
 }
 
@@ -66,11 +92,21 @@ document.querySelector('#vocab-form').addEventListener('submit', e => {
 	
 	//add it to the new vocab to UI list
 	UI.addWordToList(vocab);
+	
+	//clear fields after adding vocab
+	UI.clearFields();
+	
+	//show success alert box
+	UI.showAlert("Vocab successfully added", "success");
 })
 
 //Event : remove a vocab
 document.querySelector('#word-list').addEventListener('click', e => {
+	//Delete word from UI
 	UI.deleteWordFromList(e.target);
+	
+	//show delete message
+	UI.showAlert(`${e.target.parentElement.parentElement.firstElementChild.innerText} was successfully removed`, "success");
 });
 
 
