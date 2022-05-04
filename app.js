@@ -12,14 +12,15 @@ class UI {
 	//method that displays word list to page
 	static displayWords() {
 		//Predifined words for testing * remove after adding local storage
-		const words = [
+		const words = Store.getVocabs();
+		/*[
 			{ word: "somber",
 			meaning: "dark or dull in color or tone; gloomy.",
 			difficulty: 3},
 			{ word: "sedentary",
 			meaning: "(of a person) tending to spend much time seated; somewhat inactive.",
 			difficulty: 8}
-		]
+		]*/
 		
 		//adding the words from local storage to UI list
 		words.forEach(word => UI.addWordToList(word));
@@ -74,6 +75,27 @@ class UI {
 
 
 //Store class: handles storage
+class Store {
+	static getVocabs() {
+		let vocabString;
+		if (localStorage.getItem('vocabString') === null) {
+			vocabString = [];
+		} else {
+			vocabString = JSON.parse(localStorage.getItem('vocabString'));
+		};
+		return vocabString;
+	}
+
+	static addVocab(vocab) {
+		const vocabArray = Store.getVocabs();
+		vocabArray.push(vocab);
+		localStorage.setItem('vocabString', JSON.stringify(vocabArray));
+	}
+
+	static removeVocab(word) {
+		
+	}
+}
 
 //Event : display vocab
 document.addEventListener('DOMContentLoaded', UI.displayWords);
@@ -93,6 +115,9 @@ document.querySelector('#vocab-form').addEventListener('submit', e => {
 	//add it to the new vocab to UI list
 	UI.addWordToList(vocab);
 	
+	//add it to store
+	Store.addVocab(vocab);
+
 	//clear fields after adding vocab
 	UI.clearFields();
 	
