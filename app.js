@@ -13,14 +13,6 @@ class UI {
 	static displayWords() {
 		//Predifined words for testing * remove after adding local storage
 		const words = Store.getVocabs();
-		/*[
-			{ word: "somber",
-			meaning: "dark or dull in color or tone; gloomy.",
-			difficulty: 3},
-			{ word: "sedentary",
-			meaning: "(of a person) tending to spend much time seated; somewhat inactive.",
-			difficulty: 8}
-		]*/
 		
 		//adding the words from local storage to UI list
 		words.forEach(word => UI.addWordToList(word));
@@ -30,6 +22,7 @@ class UI {
 	static addWordToList(wordObj) {
 		const list = document.querySelector('#word-list');
 		const row = document.createElement('tr');
+		row.id = `${wordObj.word}`;
 		row.innerHTML = `
 			<td>${wordObj.word}</td>
 			<td>${wordObj.meaning}</td>
@@ -37,6 +30,18 @@ class UI {
 			<td><a class="btn btn-sm btn-danger delete">X</a></td>
 		`;
 		list.appendChild(row);
+	}
+
+	static getRandomWords() {
+		//Get array of vocabs from local storage
+		const wordlist = Store.getVocabs();
+
+		//pick a random vocab
+		const wordOfTheDay = wordlist[Math.floor(Math.random() * wordlist.length)];
+
+		//display word and meaning to UI
+		document.getElementById('daily-word').innerText = wordOfTheDay.word;
+		document.getElementById('daily-meaning').innerText = wordOfTheDay.meaning;
 	}
 	
 	//method that deletes word from list
@@ -93,12 +98,23 @@ class Store {
 	}
 
 	static removeVocab(word) {
-		
+		const vocabArray = Store.getVocabs();
+		console.log(vocabArray);
+		//filter out vocab from array that contains id of word
+		const newArray = vocabArray.filter(vocab => vocab.word !== word);
+
+		console.log(newArray);
+		//add back to local storage;
+		localStorage.setItem('vocabString', JSON.stringify(newArray));
+		console.log(localStorage)
 	}
 }
 
 //Event : display vocab
 document.addEventListener('DOMContentLoaded', UI.displayWords);
+
+//Event : Get random word of the day
+document.addEventListener('DOMContentLoaded', UI.getRandomWords);
 
 //Event : add a vocab
 document.querySelector('#vocab-form').addEventListener('submit', e => {
@@ -129,6 +145,9 @@ document.querySelector('#vocab-form').addEventListener('submit', e => {
 document.querySelector('#word-list').addEventListener('click', e => {
 	//Delete word from UI
 	UI.deleteWordFromList(e.target);
+	
+	//Delete word from local storage\
+	Store.removeVocab(e.target.parentElement.parentElement.id)
 	
 	//show delete message
 	UI.showAlert(`${e.target.parentElement.parentElement.firstElementChild.innerText} was successfully removed`, "success");
