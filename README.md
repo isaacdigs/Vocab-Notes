@@ -11,3 +11,9 @@ A vanilla javascript app that takes in user input (vocabulary) and stores it in 
 ## Features
 + Bootswatch - sketchy (bootstrap theme)
 + Font Awesome 6 icon
+
+## Main javascript concepts
++ classes
++ modules
++ local storage
++ DOM manipulation
